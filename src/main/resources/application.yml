@@ -1,0 +1,39 @@
+spring:
+  application:
+    name: cinehex-auth-server
+
+  # Configuración directa para spring-boot-starter-amqp
+  rabbitmq:
+    host: 172.200.176.197
+    port: 5672
+    username: admin  # <--- LEER PUNTO 2 ABAJO
+    password: SecurePass2026
+
+  datasource:
+    url: jdbc:h2:file:./data/cinehexdb;AUTO_SERVER_PORT=9090;DB_CLOSE_DELAY=-1;MODE=MySQL
+    driver-class-name: org.h2.Driver
+    username: admin
+    password:
+
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        use_sql_comments: true
+# OAuth2 Configuration
+# Para cambiar el secreto del cliente, usar variable de entorno: OAUTH2_CLIENT_SECRET
+# o configurar aqu�: oauth2.client.secret=tu-secreto-aqui
+
+server:
+  port: 9000
+
+springdoc:
+  api-docs:
+    path: /auth/v3/api-docs # <--- ¡Aquí está la magia!
+  swagger-ui:
+    path: /auth/swagger-ui.html
+
