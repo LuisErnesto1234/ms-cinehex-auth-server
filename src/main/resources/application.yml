@@ -2,21 +2,20 @@ spring:
   application:
     name: cinehex-auth-server
 
-  # Configuración directa para spring-boot-starter-amqp
-  rabbitmq:
-    host: 172.200.176.197
-    port: 5672
-    username: admin  # <--- LEER PUNTO 2 ABAJO
-    password: SecurePass2026
-
   datasource:
-    url: jdbc:h2:file:./data/cinehexdb;AUTO_SERVER_PORT=9090;DB_CLOSE_DELAY=-1;MODE=MySQL
-    driver-class-name: org.h2.Driver
-    username: admin
-    password:
+    url: jdbc:postgresql://${DB_HOST}:${DB_PORT:5432}/${DB_NAME}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 20
+      minimum-idle: 5
+      connection-timeout: 30000
+      idle-timeout: 600000
+      max-lifetime: 1800000
 
   jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
       ddl-auto: update
     show-sql: true
@@ -24,12 +23,20 @@ spring:
       hibernate:
         format_sql: true
         use_sql_comments: true
+
+  # Configuración directa para spring-boot-starter-amqp
+  rabbitmq:
+    host: ${RABBITMQ_HOST}  # <--- LEER PUNTO 2 ABAJO
+    port: ${RABBITMQ_PORT}
+    username: ${RABBITMQ_USERNAME}  # <--- LEER PUNTO 2 ABAJO
+    password: ${RABBITMQ_PASSWORD}
+
 # OAuth2 Configuration
 # Para cambiar el secreto del cliente, usar variable de entorno: OAUTH2_CLIENT_SECRET
 # o configurar aqu�: oauth2.client.secret=tu-secreto-aqui
 
 server:
-  port: 9000
+  port: ${SERVER_AUTH_PORT}
 
 springdoc:
   api-docs:
