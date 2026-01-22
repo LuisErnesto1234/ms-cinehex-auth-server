@@ -2,7 +2,7 @@
 # ETAPA 1: BUILDER
 # Usamos una imagen con Maven para compilar y extraer las capas.
 # -----------------------------------------------------------------------------
-FROM maven:3.9.6-eclipse-temurin-17-alpine AS builder
+FROM maven:3.9.6-eclipse-temurin-21-alpine AS builder
 WORKDIR /app
 
 # 1. Copiamos SOLO el pom.xml primero.
@@ -26,7 +26,7 @@ RUN java -Djarmode=layertools -jar *.jar extract
 # ETAPA 2: RUNTIME
 # Usamos una imagen JRE (no JDK) muy ligera para producción.
 # -----------------------------------------------------------------------------
-FROM eclipse-temurin:17-jre-alpine
+FROM eclipse-temurin:21-jre-alpine
 WORKDIR /application
 
 # 1. SEGURIDAD: Creamos un usuario "no-root".
