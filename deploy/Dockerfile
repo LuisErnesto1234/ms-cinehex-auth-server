@@ -26,7 +26,7 @@ RUN java -Djarmode=layertools -jar *.jar extract
 # ETAPA 2: RUNTIME
 # Usamos una imagen JRE (no JDK) muy ligera para producción.
 # -----------------------------------------------------------------------------
-FROM eclipse-temurin:17-jre-alpine
+FROM eclipse-temurin:21-jre-alpine
 WORKDIR /application
 
 # 1. SEGURIDAD: Creamos un usuario "no-root".
